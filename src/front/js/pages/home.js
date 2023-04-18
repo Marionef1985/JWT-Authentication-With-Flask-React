@@ -5,12 +5,24 @@ import "../../styles/home.css";
 import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
-    const navigate = useNavigate()
-	return (
-		<div className="text-center mt-5">
-		<button onClick= {()=>{navigate("/login")}} >Login</button>
-		<button onClick= {()=>{navigate("/registro")}}>Registro</button>
-		</div>
-	);
+  const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
+  return (
+    <div className="text-center mt-5">
+      <button
+        onClick={() => {
+          navigate("/login");
+        }}
+      >
+        Login
+      </button>
+      <button
+        onClick={() => {
+          navigate("/registro");
+        }}
+      >
+        Registro
+      </button>
+    </div>
+  );
 };

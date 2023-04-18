@@ -4,14 +4,14 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 
 api = Blueprint('api', __name__)
 
 
 @api.route('/signup', methods=['POST'])
 def create_new_user():
-    email = request.json.get('email', None)
+    email = request.json.get('email', None) #porque aqui es un get y no un .post?
     password = request.json.get('password', None)
     is_active = request.json.get('is_active', True)
 
@@ -24,7 +24,7 @@ def create_new_user():
 
     return jsonify(response_body), 200
 
-@app.route('/login', methods=['POST'])
+@api.route('/login', methods=['POST'])
 def login_user():
     email = request.json.get('email', None)
     password = request.json.get('password', None)
@@ -38,7 +38,7 @@ def login_user():
     access_token = create_access_token(identity=user.id)
     return jsonify({ "token": access_token}), 200
 
-@app.route('/private', methods=['GET'])
+@api.route('/private', methods=['GET'])
 @jwt_required()
 def go_private():
     users = User.query.all()

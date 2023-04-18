@@ -4,12 +4,12 @@ import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 
-const Login = () => {
+const Signup = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleClick = () => {
-    fetch(process.env.BACKEND_URL + "/api/login", {
+    fetch(process.env.BACKEND_URL + "/api/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,9 +21,8 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((response) => {
-        if (response.token) {
-          localStorage.setItem("token", response.token);
-          navigate("/private");
+        if (response.message == "all ok") {
+          navigate("/login");
         } else {
           alert("Something went wrong");
         }
@@ -45,9 +44,9 @@ const Login = () => {
         type="password"
         placeholder="your password here"
       />
-      <button onClick={handleClick}>Login</button>
+      <button onClick={handleClick}>Register</button>
     </>
   );
 };
 
-export default Login;
+export default Signup;
